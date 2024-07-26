@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        FOLDER_NAME = '/home/jovyan/results'
-        LOCAL_FOLDER = 'C:/Users/Admin/Desktop/Development/Python/Github/docker-mount'
+        FOLDER_NAME = env.FOLDER_NAME
+        LOCAL_FOLDER = env.LOCAL_FOLDER
     }    
 
 
