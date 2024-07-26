@@ -35,7 +35,7 @@ pipeline {
                 script {
                     def sessionToken = readFile('session_token.txt').trim()
                     env.SESSION_TOKEN = sessionToken
-                    echo "Session Token: ${SESSION_TOKEN}"
+                    println "Session Token: ${SESSION_TOKEN}"
                 }
             }
         }
