@@ -15,17 +15,17 @@ pipeline {
         }
         stage('Run Preprocessing') {
             steps {
-                bat 'winpty docker exec -it ml-cicd-v1 python preprocessing.py'
+                bat 'docker exec ml-cicd-v1 python preprocessing.py'
             }
         }
         stage('Run Training') {
             steps {
-                bat 'winpty docker exec -it ml-cicd-v1 python train.py'
+                bat 'docker exec ml-cicd-v1 python train.py'
             }
         }
         stage('Run Testing') {
             steps {
-                bat 'winpty docker exec -it ml-cicd-v1 python test.py'
+                bat 'docker exec ml-cicd-v1 python test.py'
             }
         }
     }
