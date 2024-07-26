@@ -1,6 +1,9 @@
 pipeline {
     agent any
 
+    environment {
+        RESULTS_DIR = 'results'
+    }
 
     stages {
         stage('Build Docker Image') {
@@ -33,6 +36,15 @@ pipeline {
         stage('Run Testing') {
             steps {
                 bat 'docker exec ml-cicd-v1 python test.py'
+            }
+        }
+        stage('Copy Results') {
+            steps {
+                bat "docker exec ${CONTAINER_ID} cd ${RESULTS_DIR} && docker cp ${CONTAINER_ID}:${RESULTS_DIR}/test_metadata.json ${WORKSPACE}/test_metadata.json"
+                script {
+                    def results = readFile("${WORKSPACE}/test_metadata.json")
+                    println "Results: ${results}"
+                }
             }
         }
     }
