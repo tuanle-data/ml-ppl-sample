@@ -32,9 +32,11 @@ pipeline {
             steps {
                 bat 'docker exec ml-cicd-v1 bash -c "echo \$SESSION_TOKEN > /tmp/session_token.txt"'
                 bat 'docker cp ml-cicd-v1:/tmp/session_token.txt .'
-                def sessionToken = readFile('session_token.txt').trim()
-                env.SESSION_TOKEN = sessionToken
-                echo "Session Token: ${SESSION_TOKEN}"
+                script {
+                    def sessionToken = readFile('session_token.txt').trim()
+                    env.SESSION_TOKEN = sessionToken
+                    echo "Session Token: ${SESSION_TOKEN}"
+                }
             }
         }
     }
