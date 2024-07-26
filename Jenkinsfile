@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         FOLDER_NAME = '/home/jovyan/results'
-        LOCAL_FOLDER = 'C:\Users\Admin\Desktop\Development\Python\Github\docker-mount'
+        LOCAL_FOLDER = 'C:/Users/Admin/Desktop/Development/Python/Github/docker-mount'
     }    
 
 
