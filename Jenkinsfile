@@ -16,7 +16,7 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 bat 'docker rm -f ml-cicd-v1 || true'
-                bat 'docker run -d --name ml-cicd-v1 -p 8888:8888 -v "${LOCAL_FOLDER//\'}/:/results" ml-ppl-v1'
+                bat 'docker run -d --name ml-cicd-v1 -p 8888:8888 ml-ppl-v1'
                 bat 'docker ps -qf name=ml-cicd-v1 > container_id.txt'
                 script {
                     def containerId = readFile('container_id.txt').trim()
