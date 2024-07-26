@@ -31,9 +31,9 @@ pipeline {
         stage('Export Session Token') {
             steps {
                 bat 'docker exec ml-cicd-v1 bash -c "echo \$SESSION_TOKEN > /tmp/session_token.txt"'
-                bat 'docker cp ml-cicd-v1:/tmp/session_token.txt .'
+                bat "docker cp ml-cicd-v1:/tmp/session_token.txt ${WORKSPACE}/session_token.txt"
                 script {
-                    def sessionToken = readFile('session_token.txt').trim()
+                    def sessionToken = readFile("${WORKSPACE}/session_token.txt").trim()
                     env.SESSION_TOKEN = sessionToken
                     println "Session Token: ${SESSION_TOKEN}"
                 }
