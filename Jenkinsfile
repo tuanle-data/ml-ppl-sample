@@ -42,10 +42,12 @@ pipeline {
         }
         stage('Copy File') {
             steps {
-                bat "docker exec ${CONTAINER_ID} cmd /c \"cd ${FOLDER_NAME} && cd\" > container_folder_path.txt"
-                def containerFolderPath = readFile 'container_folder_path.txt'
-                println "Container folder path: ${containerFolderPath}"
-                bat "docker cp ${CONTAINER_ID}:${containerFolderPath}\\test_metadata.json ${LOCAL_FOLDER}"
+                script {
+                    bat "docker exec ${CONTAINER_ID} cmd /c \"cd ${FOLDER_NAME} && cd\" > container_folder_path.txt"
+                    def containerFolderPath = readFile 'container_folder_path.txt'
+                    println "Container folder path: ${containerFolderPath}"
+                    bat "docker cp ${CONTAINER_ID}:${containerFolderPath}\\test_metadata.json ${LOCAL_FOLDER}"
+                }
             }
         }      
     }
