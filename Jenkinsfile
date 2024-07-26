@@ -40,10 +40,11 @@ pipeline {
                 bat 'docker exec ml-cicd-v1 python test.py'
             }
         }
-        stage('Copy File') {
+        stage('Handle results') {
             steps {
                 script {                    
                     bat "docker container exec ml-cicd-v1 cat ${FOLDER_NAME}/train_metadata.json ${FOLDER_NAME}/test_metadata.json" 
+                    bat "docker exec ml-cicd-v1 jupyter notebook list"
                     bat "docker cp ml-cicd-v1:${FOLDER_NAME}/train_metadata.json ${LOCAL_FOLDER}/train_metadata.json"
                     bat "docker cp ml-cicd-v1:${FOLDER_NAME}/test_metadata.json ${LOCAL_FOLDER}/test_metadata.json"
                 }
