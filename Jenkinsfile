@@ -1,9 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        RESULTS_DIR = './results' 
-    }
 
     stages {
         stage('Build Docker Image') {
@@ -15,6 +12,12 @@ pipeline {
             steps {
                 bat 'docker rm -f ml-cicd-v1 || true'
                 bat 'docker run -d --name ml-cicd-v1 -p 8888:8888 ml-ppl-v1'
+                bat 'docker ps -qf name=ml-cicd-v1 > container_id.txt'
+                script {
+                    def containerId = readFile('container_id.txt').trim()
+                    println "Container ID: ${containerId}"
+                    env.CONTAINER_ID = containerId
+                }
             }
         }
         stage('Run Preprocessing') {
@@ -30,15 +33,6 @@ pipeline {
         stage('Run Testing') {
             steps {
                 bat 'docker exec ml-cicd-v1 python test.py'
-            }
-        }
-        stage('Copy Results') {
-            steps {
-                bat "docker exec ml-cicd-v1 cd ${RESULTS_DIR} && docker cp ml-cicd-v1:${RESULTS_DIR}/test_metadata.json ${WORKSPACE}/test_metadata.json"
-                script {
-                    def results = readFile("${WORKSPACE}/test_metadata.json")
-                    println "Results: ${results}"
-                }
             }
         }
     }
