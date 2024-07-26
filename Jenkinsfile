@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        FOLDER_NAME = env.FOLDER_NAME
-        LOCAL_FOLDER = env.LOCAL_FOLDER
+        FOLDER_NAME = "${env.FOLDER_NAME}"
+        LOCAL_FOLDER = "${env.LOCAL_FOLDER}"
     }    
 
 
