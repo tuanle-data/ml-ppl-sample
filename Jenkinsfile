@@ -34,7 +34,7 @@ pipeline {
         }
         stage('Copy Results') {
             steps {
-                bat "docker cp ml-cicd-v1:${RESULTS_DIR}/test_metadata.json ${WORKSPACE}/test_metadata.json"
+                bat "docker exec ml-cicd-v1 cd ${RESULTS_DIR} && docker cp ml-cicd-v1:${RESULTS_DIR}/test_metadata.json ${WORKSPACE}/test_metadata.json"
                 script {
                     def results = readFile("${WORKSPACE}/test_metadata.json")
                     println "Results: ${results}"
