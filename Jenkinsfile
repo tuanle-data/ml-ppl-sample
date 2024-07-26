@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        FOLDER_NAME = 'home/jovyan/results'
-        LOCAL_FOLDER = 'C:\\Users\\Admin\\Desktop\\Development\\Python\\Github\\docker-mount'
+        FOLDER_NAME = '/home/jovyan/results'
+        LOCAL_FOLDER = 'C:\Users\Admin\Desktop\Development\Python\Github\docker-mount'
     }    
 
 
@@ -43,8 +43,9 @@ pipeline {
         stage('Copy File') {
             steps {
                 script {                    
-                    bat "docker exec ${CONTAINER_ID} cat ${FOLDER_NAME}/test_metadata.json"
-                    bat "docker cp ${CONTAINER_ID}:${FOLDER_NAME}/test_metadata.json ${LOCAL_FOLDER}"
+                    bat "docker container exec ml-cicd-v1 cat ${FOLDER_NAME}/train_metadata.json ${FOLDER_NAME}/test_metadata.json" 
+                    bat "docker cp ml-cicd-v1:${FOLDER_NAME}/train_metadata.json ${LOCAL_FOLDER}/train_metadata.json"
+                    bat "docker cp ml-cicd-v1:${FOLDER_NAME}/test_metadata.json ${LOCAL_FOLDER}/test_metadata.json"
                 }
             }
         }      
