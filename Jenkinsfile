@@ -9,6 +9,7 @@ pipeline {
         }
         stage('Run Docker Container') {
             steps {
+                bat 'docker rm -f ml-cicd-v1 || true'
                 bat 'docker run -d --name ml-cicd-v1 -p 8888:8888 ml-ppl-v1'
             }
         }
